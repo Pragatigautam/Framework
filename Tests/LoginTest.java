@@ -2,6 +2,7 @@ package Tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -23,15 +24,27 @@ public class LoginTest {
         productPage = new Products(driver);
         
     }
-    
+    //LogIn Test case
     @Test
     public void loginAndAddToCartTest() {
     	loginPage.login("standard_user", "secret_sauce");
-//        productPage.clickAddToCartButton(0);
-//        productPage.clickShoppingCartBadge();
-        
+
+    }
+    //login without password and verify it shows error
+    @Test
+    public void loginWithoutPassword() {
+    	loginPage.loginwithoutPassword("standard_user");
+    	boolean avail = loginPage.errorState();
+        Assert.assertTrue(avail);
     }
     
+    
+    @Test
+    public void verifyTitleForLogin() {
+        String actual = loginPage.verifyTitle();
+        String expected = "Swag Labs";
+        Assert.assertEquals(actual, expected);
+    }
     
     
     
